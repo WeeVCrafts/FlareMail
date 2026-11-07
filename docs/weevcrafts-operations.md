@@ -79,6 +79,13 @@ integrity OK, zero production writes. Keep the separate local encryption key
 private and backed up independently. The old daily backup timer currently
 protects Mailflare only; it does not yet protect FlareMail.
 
+A read-only D1 export was captured locally at
+`~/.local/share/weevcrafts-mail/backups/flaremail-d1-20261107.sql` (23 tables,
+23,477 bytes; SHA-256
+`161f9729a2d7c1baf13c021215717e915f884bb3535f48a4748843307696db6c`). This is
+only a database-record backup; it does not cover the private R2 objects and is
+not a complete instance backup.
+
 Before retiring the old Worker, configure and demonstrate FlareMail backups
 using the upstream `backup:export`, `backup:verify` and `backup:restore` tools.
 They cover D1, durable KV preferences and R2 attachments/brand objects, exclude

@@ -18,7 +18,7 @@ import account from "../entity/account";
 import { normalizeSendParams, validatePreparedAttachments } from '../utils/send-validator';
 import { isAdmin } from '../security/admin-identity';
 import emailSendService from './email-send-service';
-import mailProviderService, { hasCloudflareEmail } from './mail-provider-service';
+import mailProviderService, { hasCloudflareEmail, resolveResendToken } from './mail-provider-service';
 import { cloudflareRejection } from '../utils/cloudflare-mail';
 import verifyUtils from '../utils/verify-utils';
 import { conversationLimits, findConversation, groupConversations } from '../utils/mail-conversation';
@@ -342,7 +342,7 @@ const emailService = {
 		// privacy for a mixed message. Pure internal mail remains independent.
 		const providerRoutesAll = externalRecipients.length > 0;
 		const internalRecipients = providerRoutesAll ? [] : allRecipients;
-		const resendToken = resendTokens?.[domain];
+		const resendToken = resolveResendToken(c, domain, resendTokens);
 		const useCloudflareEmail = externalRecipients.length > 0 && (await mailProviderService.read(c)).mailProvider === 'cloudflare';
 		if (useCloudflareEmail && !hasCloudflareEmail(c)) throw new BizError(t('cloudflareEmailNotBound'), 503);
 		if (externalRecipients.length > 0 && !useCloudflareEmail && !resendToken) {

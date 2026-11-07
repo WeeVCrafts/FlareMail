@@ -2,19 +2,21 @@
   <section class="right-card-pane">
     <div class="stationery-card">
       <div class="mobile-brand-wrap">
-        <div class="brand-seal-icon mobile-seal">
+        <img v-if="logoUrl" class="mobile-brand-logo" :src="logoUrl" :alt="title" width="180" height="41" />
+        <div v-else class="brand-seal-icon mobile-seal">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
           </svg>
         </div>
         <div>
-          <h3 class="brand-title-text arc-serif-title" style="font-size: 19px">{{ title }}</h3>
+          <h3 v-if="!logoUrl" class="brand-title-text arc-serif-title" style="font-size: 19px">{{ title }}</h3>
           <span style="font-size: 12px; color: var(--muted);">{{ subtitle }}</span>
         </div>
       </div>
 
       <slot name="header" />
       <slot />
+      <footer class="mail-source-credit">WeevCrafts Mail · <a href="https://github.com/WeeVCrafts/FlareMail" target="_blank" rel="noopener noreferrer">FlareMail source</a></footer>
     </div>
   </section>
 </template>
@@ -22,6 +24,7 @@
 <script setup>
 defineProps({
   title: { type: String, default: '' },
+  logoUrl: { type: String, default: '' },
   subtitle: { type: String, default: '' }
 })
 </script>
@@ -57,7 +60,10 @@ defineProps({
       display: none;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
       margin-bottom: 8px;
+
+      .mobile-brand-logo { width: 180px; max-width: 100%; height: auto; padding: 8px; background: #fffdf8; border-radius: 6px; box-sizing: border-box; }
 
       @media (max-width: 960px) {
         display: flex;
@@ -79,6 +85,9 @@ defineProps({
         }
       }
     }
+
+    .mail-source-credit { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .mail-source-credit a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
     .form-item {
       display: flex;

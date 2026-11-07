@@ -1,14 +1,15 @@
 <template>
-  <section class="left-hero-pane" :class="{ 'is-preview': isPreview }">
+  <section class="left-hero-pane" :class="{ 'is-preview': isPreview, 'is-weevcrafts': variant === 'weevcrafts' }">
     <!-- Brand & Seal -->
     <div class="brand-mark-row">
-      <div class="brand-seal-icon">
+      <img v-if="logoUrl" class="brand-logo-image" :src="logoUrl" :alt="title" width="232" height="53" />
+      <div v-else class="brand-seal-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
         </svg>
       </div>
       <div class="brand-title-wrap">
-        <span class="brand-title-text arc-serif-title">{{ title }}</span>
+        <span v-if="!logoUrl" class="brand-title-text arc-serif-title">{{ title }}</span>
         <el-input
           v-if="editing === 'subtitle'"
           ref="editInput"
@@ -49,6 +50,8 @@
           <br v-if="index < sloganLines.length - 1" />
         </template>
       </h1>
+
+      <img v-if="variant === 'weevcrafts'" class="craft-photograph" src="/weevcrafts/crafts.webp" alt="Handcrafted ceramics, woven fabric and a brass lantern" width="720" height="320" />
 
       <!-- Literary Letter Quote Box -->
       <div class="hero-letter-quote">
@@ -150,6 +153,8 @@ import { defaultLoginCopy } from '@/utils/brand.js'
 
 const props = defineProps({
   title: { type: String, default: '' },
+  logoUrl: { type: String, default: '' },
+  variant: { type: String, default: '' },
   copy: { type: Object, required: true },
   editable: { type: Boolean, default: false },
   isPreview: { type: Boolean, default: false }
@@ -188,6 +193,12 @@ function commit() {
 </script>
 
 <style lang="scss" scoped>
+.brand-logo-image { width: 232px; height: auto; max-width: 100%; padding: 10px; background: #fffdf8; border-radius: 6px; box-sizing: border-box; }
+.craft-photograph { width: 100%; height: 180px; object-fit: cover; object-position: center; border-radius: 12px; border: 1px solid var(--line); }
+.is-weevcrafts .brand-mark-row { flex-wrap: wrap; }
+.is-weevcrafts .hero-slogan-large { font-family: Georgia, 'Times New Roman', serif; }
+@media (max-height: 800px) { .craft-photograph { height: 124px; } }
+
 /* Left Hero Pane */
 .left-hero-pane {
   display: flex;

@@ -29,13 +29,15 @@
       <div class="preview-panes" :class="`is-${width}`">
         <LoginHero
           :title="title"
+          :logo-url="settingStore.settings.logoUrl"
+          variant="weevcrafts"
           :copy="copy"
           editable
           is-preview
           @update:copy="onCopyChange"
         />
 
-        <LoginCard :title="title" :subtitle="copy.subtitle || defaults.subtitle">
+        <LoginCard :title="title" :logo-url="settingStore.settings.logoUrl" :subtitle="copy.subtitle || defaults.subtitle">
           <template #header>
             <LoginCardHead
               :title="copy.cardTitle || defaults.cardTitle"

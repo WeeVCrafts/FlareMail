@@ -5,9 +5,23 @@
  */
 
 export const THEME_ACCENT_STORAGE_KEY = 'theme_accent'
-export const DEFAULT_THEME_ACCENT = 'ocean'
+export const DEFAULT_THEME_ACCENT = 'weevcrafts'
 
 export const THEME_ACCENTS = [
+  {
+    id: 'weevcrafts', nameKey: 'accentWeevcrafts',
+    preview: { light: '#123f32', dark: '#9cceae' },
+    light: {
+      accent: '#123f32', accentHover: '#0d3529', accentLight: '#eaf0e8',
+      accentContrast: '#ffffff', focusRing: 'color-mix(in srgb, #123f32 35%, transparent)',
+      paper: '#f8f2e8', paperSoft: '#eaf0e8', surface: '#fffdf8', line: '#dfd8ca', lineStrong: '#b5bcae',
+    },
+    dark: {
+      accent: '#9cceae', accentHover: '#b4dfc3', accentLight: '#203c2d',
+      accentContrast: '#12271c', focusRing: 'color-mix(in srgb, #9cceae 40%, transparent)',
+      paper: '#101b16', paperSoft: '#19291f', surface: '#1d3025', line: '#344b3c', lineStrong: '#506a58',
+    },
+  },
   {
     id: 'monochrome',
     nameKey: 'accentMonochrome',

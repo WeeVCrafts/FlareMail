@@ -3,7 +3,7 @@ import managedDomains from './managed-domain-service';
 import settings from './setting-service';
 import accountService from './account-service';
 import emailService from './email-service';
-import { hasCloudflareEmail } from './mail-provider-service';
+import { hasCloudflareEmail, resolveResendToken } from './mail-provider-service';
 import verify from '../utils/verify-utils';
 
 async function dns(name,type) {
@@ -35,7 +35,7 @@ const diagnostics={
     const [mx,txt,dmarc,dkim]=await Promise.all([dns(domain,'MX'),dns(domain,'TXT'),dns('_dmarc.'+domain,'TXT'),dns(selector+'._domainkey.'+domain,'TXT')]);
     const config=await settings.query(c);
     const spf=txt.status==='unavailable'?txt:{status:txt.records.some(value=>value.replace(/"/g,'').startsWith('v=spf1 '))?'found':'missing',records:txt.records.filter(value=>value.includes('v=spf1'))};
-    return {domain,enabled:state.entries.find(entry=>entry.domain===domain)?.enabled!==false,selector,checks:{mx,spf,dmarc,dkim},provider:config.mailProvider||'resend',credentialsConfigured:!!config.resendTokens?.[domain],cloudflareBound:hasCloudflareEmail(c),routingVerified:false,checkedAt:new Date().toISOString()};
+    return {domain,enabled:state.entries.find(entry=>entry.domain===domain)?.enabled!==false,selector,checks:{mx,spf,dmarc,dkim},provider:config.mailProvider||'resend',credentialsConfigured:!!resolveResendToken(c,domain,config.resendTokens),cloudflareBound:hasCloudflareEmail(c),routingVerified:false,checkedAt:new Date().toISOString()};
   },
   async send(c,body,userId) {
     await owned(c,body?.accountId,userId);

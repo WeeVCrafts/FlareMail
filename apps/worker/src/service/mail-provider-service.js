@@ -1,6 +1,13 @@
 import BizError from '../error/biz-error';
 import { t } from '../i18n/i18n';
 
+// A sending-only key can stay in encrypted Worker secrets instead of D1/KV.
+// Require an exact domain so it cannot accidentally authorize another sender.
+export function resolveResendToken(c, domain, tokens = {}) {
+	return c.env.RESEND_API_KEY && c.env.RESEND_DOMAIN === domain
+		? c.env.RESEND_API_KEY : tokens?.[domain];
+}
+
 export function hasCloudflareEmail(c) {
 	return typeof c.env.email?.send === 'function';
 }

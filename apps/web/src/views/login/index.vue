@@ -14,10 +14,10 @@
     <!-- Main Left-Right Dual-Pane Layout -->
     <main class="dual-pane-layout">
       <!-- Left Side: Literary Brand Showcase (左侧雅致书信意境) -->
-      <LoginHero :title="brand.title" :copy="brand.loginCopy" />
+      <LoginHero :title="brand.title" :logo-url="brand.logoUrl" :copy="brand.loginCopy" variant="weevcrafts" />
 
       <!-- Right Side: Comfortable Stationery Login Card (右侧舒展信笺卡片) -->
-      <LoginCard :title="brand.title" :subtitle="brand.loginCopy.subtitle">
+      <LoginCard :title="brand.title" :logo-url="brand.logoUrl" :subtitle="brand.loginCopy.subtitle">
         <template #header>
           <LoginCardHead :title="cardTitle" :desc="cardDesc" />
         </template>
@@ -33,8 +33,9 @@
           <!-- Normal Login Form -->
             <template v-else>
               <div class="form-item">
-                <label class="item-label">{{ $t('mailboxAccountLabel') }}</label>
+                <label class="item-label" for="mailbox-login">{{ $t('mailboxAccountLabel') }}</label>
                 <el-input
+                  id="mailbox-login"
                   :class="!hideLoginDomain ? 'email-input arc-modern-input' : 'arc-modern-input'"
                   v-model="form.email"
                   type="text"
@@ -60,8 +61,9 @@
               </div>
 
               <div class="form-item">
-                <label class="item-label">{{ $t('loginPasswordLabel') }}</label>
+                <label class="item-label" for="mailbox-password">{{ $t('loginPasswordLabel') }}</label>
                 <el-input
+                  id="mailbox-password"
                   v-model="form.password"
                   :placeholder="$t('password')"
                   type="password"

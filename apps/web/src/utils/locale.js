@@ -8,7 +8,7 @@ import { setRuntimeConfigLocale } from '@/utils/runtime-config.js'
 import { setBrandLocale } from '@/utils/brand.js'
 
 export const SUPPORTED_LOCALES = ['zh', 'en']
-export const DEFAULT_LOCALE = 'zh'
+export const DEFAULT_LOCALE = 'en'
 export const LOCALE_STORAGE_KEY = 'locale_pref'
 
 const ELEMENT_LOCALES = { zh: zhCn, en: enUs }

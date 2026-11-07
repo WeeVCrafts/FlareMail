@@ -4,7 +4,7 @@ import KvConst from '../const/kv-const';
 // Short codes only: the web client, the Accept-Language header and the editor
 // all agree on 'zh' / 'en'. Keep this list in sync with apps/web/src/utils/locale.js.
 export const SUPPORTED_LOCALES = ['zh', 'en'];
-export const DEFAULT_LOCALE = 'zh';
+export const DEFAULT_LOCALE = 'en';
 
 // 'zh-CN' / 'zh-Hans-CN' / 'EN-us' all reduce to their base subtag.
 export function normalizeLocale(value) {

@@ -20,9 +20,10 @@ Cloudflare account: `fb1c7dea1efaecd445810a8c693c4750`.
 The private deployment configuration is `apps/worker/wrangler.toml` (ignored).
 There is no Cloudflare outbound email binding, AI binding, public R2 domain or
 automatic paid upgrade. The initial deployed version was
-`969554e6-c05b-4f76-8682-6ee221e2586e`; it contains upstream source before the
-local branding and signed Message-ID changes. Record subsequent versions in
-the installation evidence before calling them deployed.
+`969554e6-c05b-4f76-8682-6ee221e2586e`; the current active secret-change
+revision is `4261d188-4ad5-4ae4-b949-24826d0e883b`, built from fork commit
+`35435bd`. Record subsequent versions in the installation evidence before
+calling them deployed.
 
 ## Migration state
 
@@ -84,6 +85,21 @@ They cover D1, durable KV preferences and R2 attachments/brand objects, exclude
 sessions/caches, and require writers stopped for a consistent export. Restore
 only to new isolated resources. Worker secrets need separate secure recovery.
 Do not claim replacement backup coverage until an actual isolated restore passes.
+
+A secret-free source profile is prepared at
+`~/.config/weevcrafts-mail/flaremail-source.json` (mode 600). The owner must
+provide a separately scoped Cloudflare API token and R2 S3 access key/secret as
+the environment variables named in that profile, then run from the repository:
+
+```sh
+pnpm backup:export --config ~/.config/weevcrafts-mail/flaremail-source.json \
+  --out ~/.local/share/weevcrafts-mail/backups/flaremail-<timestamp> --offline
+pnpm backup:verify --in ~/.local/share/weevcrafts-mail/backups/flaremail-<timestamp>
+```
+
+The restore command must target newly created empty D1/KV/R2 resources and use
+`--confirm-target` with that new D1 UUID. Never place these credentials or the
+backup archive in Git or in chat.
 
 For a web-interface rollback, reattach `inbox.weevcrafts.com` to `mailflare`
 using the recorded hostname binding. If recipient routes have moved, change the

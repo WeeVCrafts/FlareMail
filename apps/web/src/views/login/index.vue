@@ -393,9 +393,7 @@ async function submit(emailOverride) {
       window.location.replace(oauthReturn)
       return
     }
-    const redirectUrl = typeof route.query?.redirect === 'string' && route.query.redirect.startsWith('/') && !route.query.redirect.startsWith('//')
-      ? route.query.redirect
-      : '/inbox'
+    const redirectUrl = '/inbox'
     try {
       await router.replace(redirectUrl)
     } catch {
